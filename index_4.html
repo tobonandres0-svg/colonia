@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Alemania 2026">
+<meta name="theme-color" content="#0d0d0d">
+<title>Köln & Düsseldorf · Juli 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0d0d0d;--steel:#1a1a1a;--iron:#2a2a2a;--plate:#3a3a3a;
+  --rust:#8b3a1a;--amber:#c8780a;--gold:#e8a020;
+  --bone:#f0ebe0;--paper:#e8e2d5;--smoke:#b0a898;
+  --text:#1a1a1a;--white:#fff;--card-bg:#fff;
+  --radius:4px;--shadow:0 2px 12px rgba(0,0,0,.12);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--black);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* HERO */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:var(--black)}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 40% at 30% 100%,rgba(139,58,26,.3) 0%,transparent 65%),radial-gradient(ellipse 50% 30% at 80% 90%,rgba(200,120,10,.12) 0%,transparent 60%),linear-gradient(180deg,#0d0d0d 0%,#111 50%,#151208 100%)}
+.hero-skyline{position:absolute;bottom:0;left:0;right:0;width:100%;height:70%}
+.hero-water{position:absolute;bottom:0;left:0;right:0;height:18%;background:linear-gradient(180deg,transparent 0%,rgba(13,13,13,.7) 50%,rgba(13,13,13,.95) 100%)}
+.hero-content{position:relative;z-index:10;padding:0 24px 52px}
+.hero-city-label{font-family:'Roboto Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.hero-city-label::before{content:'';display:block;width:24px;height:1px;background:var(--amber)}
+.hero-title{font-family:'Oswald',sans-serif;font-size:clamp(52px,14vw,88px);font-weight:700;color:var(--white);line-height:.9;text-transform:uppercase;letter-spacing:-.02em;margin-bottom:4px}
+.hero-title .accent{color:var(--amber)}
+.hero-title2{font-family:'Oswald',sans-serif;font-size:clamp(28px,7vw,48px);font-weight:400;color:rgba(255,255,255,.45);line-height:1;text-transform:uppercase;letter-spacing:.05em;margin-bottom:24px}
+.hero-meta{display:flex;align-items:center;gap:16px;margin-bottom:36px}
+.hero-date-block{background:var(--amber);color:var(--black);font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px}
+.hero-sep{width:40px;height:1px;background:rgba(255,255,255,.2)}
+.hero-cities{font-family:'Roboto Mono',monospace;font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.08em}
+.scroll-cta{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.3);font-family:'Roboto Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;animation:float 2.4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* MAIN */
+.main{background:var(--paper);margin-top:-4px;position:relative;z-index:5;padding-bottom:80px}
+.top-band{background:var(--black);padding:10px 24px;display:flex;align-items:center;gap:12px}
+.top-band-flag{font-size:16px}
+.top-band-text{font-family:'Roboto Mono',monospace;font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase}
+.top-band-text strong{color:var(--amber)}
+
+/* NAV TABS */
+.nav-tabs{position:sticky;top:0;z-index:50;background:var(--steel);display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:2px solid var(--amber);-webkit-overflow-scrolling:touch}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{flex-shrink:0;padding:12px 14px;border:none;background:none;cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:1px;border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .2s}
+.nav-tab .day-num{font-size:18px;font-weight:700;line-height:1}
+.nav-tab .day-label{font-size:9px;letter-spacing:.08em}
+.nav-tab.active{color:var(--amber);border-bottom-color:var(--amber)}
+
+/* SECTIONS */
+.day-section{display:none;animation:fadeIn .25s ease}
+.day-section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTION HEADER */
+.section-header{background:var(--iron);padding:28px 24px 22px;position:relative;overflow:hidden}
+.section-header::after{content:attr(data-city);position:absolute;right:-10px;bottom:-20px;font-family:'Oswald',sans-serif;font-size:80px;font-weight:700;color:rgba(255,255,255,.03);text-transform:uppercase;letter-spacing:-.03em;pointer-events:none;line-height:1}
+.section-tag{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--amber);letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.section-tag::before{content:'';display:block;width:16px;height:1px;background:var(--amber)}
+.section-title{font-family:'Oswald',sans-serif;font-size:32px;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:.02em;line-height:1;margin-bottom:4px}
+.section-meta{font-family:'Inter',sans-serif;font-size:12px;color:rgba(255,255,255,.4);margin-top:6px}
+.city-badge{display:inline-flex;align-items:center;gap:6px;background:var(--amber);color:var(--black);font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;margin-bottom:10px}
+
+/* WHO IS COMING */
+.who-row{margin:16px 20px 0;display:flex;gap:10px;flex-wrap:wrap}
+.who-pill{background:var(--iron);border:1px solid var(--plate);border-left:3px solid var(--amber);padding:10px 14px;flex:1;min-width:130px}
+.who-name{font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;color:var(--white);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
+.who-time{font-family:'Roboto Mono',monospace;font-size:13px;color:var(--amber);font-weight:500}
+.who-note{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+
+/* TIMELINE */
+.timeline{padding:16px 12px;display:flex;flex-direction:column}
+.t-item{display:grid;grid-template-columns:36px 12px 1fr;gap:0 8px;position:relative;align-items:start}
+.t-item:not(:last-child) .t-line{position:absolute;left:43px;top:28px;bottom:-8px;width:1px;background:linear-gradient(180deg,var(--amber) 0%,rgba(200,120,10,.1) 100%)}
+.t-time{text-align:right;font-family:'Roboto Mono',monospace;font-size:9.5px;font-weight:500;color:var(--smoke);padding-top:12px;line-height:1.2;grid-column:1}
+.t-dot-col{display:flex;flex-direction:column;align-items:center;padding-top:12px;grid-column:2}
+.t-dot{width:10px;height:10px;background:var(--amber);flex-shrink:0;z-index:1;transform:rotate(45deg)}
+.t-dot.highlight{width:12px;height:12px;background:var(--gold);box-shadow:0 0 0 3px rgba(232,160,32,.25)}
+.t-card{background:var(--card-bg);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;box-shadow:var(--shadow);border-left:3px solid transparent;transition:transform .12s;grid-column:3}
+.t-card:active{transform:scale(.98)}
+.t-card.featured{border-left-color:var(--amber)}
+.t-card.dark-card{background:var(--iron);border-left-color:var(--plate)}
+.t-card-title{font-family:'Oswald',sans-serif;font-size:15px;font-weight:600;color:var(--black);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;line-height:1.2}
+.dark-card .t-card-title{color:var(--white)}
+.t-card-desc{font-size:12.5px;color:#666;line-height:1.5;margin-bottom:8px}
+.dark-card .t-card-desc{color:rgba(255,255,255,.5)}
+.t-badges{display:flex;flex-wrap:wrap;gap:4px}
+.t-badge{font-family:'Roboto Mono',monospace;font-size:9.5px;font-weight:500;padding:2px 7px;border-radius:2px;letter-spacing:.06em;text-transform:uppercase}
+.badge-hist{background:rgba(139,58,26,.1);color:var(--rust)}
+.badge-bier{background:rgba(200,120,10,.12);color:#7a5000}
+.badge-frei{background:rgba(0,0,0,.06);color:#666}
+.badge-musik{background:rgba(60,40,100,.12);color:#3a2060}
+.badge-essen{background:rgba(40,100,40,.08);color:#2a5a2a}
+.badge-warn{background:rgba(200,120,10,.12);color:#7a5000}
+.badge-zug{background:rgba(0,80,160,.08);color:#004080}
+.badge-geo{background:rgba(0,0,0,.06);color:#555}
+.badge-soad{background:rgba(120,0,0,.12);color:#780000}
+.badge-water{background:rgba(0,80,160,.1);color:#004080}
+.badge-japan{background:rgba(180,0,30,.08);color:#900018}
+
+/* HIGHLIGHT CARD */
+.hl-card{margin:0 20px 16px;background:var(--iron);padding:18px 20px;position:relative;overflow:hidden}
+.hl-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--amber)}
+.hl-card::after{content:attr(data-icon);position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:40px;opacity:.12}
+.hl-tag{font-family:'Roboto Mono',monospace;font-size:9px;color:var(--amber);letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px}
+.hl-title{font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px}
+.hl-sub{font-size:12px;color:rgba(255,255,255,.5);line-height:1.5;margin-bottom:14px}
+.hl-stats{display:flex;gap:20px}
+.hl-stat{display:flex;flex-direction:column;gap:2px}
+.hl-stat-label{font-family:'Roboto Mono',monospace;font-size:9px;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase}
+.hl-stat-value{font-family:'Oswald',sans-serif;font-size:16px;font-weight:700;color:var(--amber)}
+
+/* SOAD CARD */
+.soad-card{margin:0 20px 16px;background:linear-gradient(135deg,#1a0000 0%,#2a0808 100%);padding:18px 20px;position:relative;overflow:hidden;border-left:4px solid #c00}
+.soad-card::after{content:'🤘';position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:38px;opacity:.15}
+.soad-tag{font-family:'Roboto Mono',monospace;font-size:9px;color:#ff4444;letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px}
+.soad-title{font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px}
+.soad-sub{font-size:12px;color:rgba(255,255,255,.5);line-height:1.5;margin-bottom:14px}
+.soad-stats{display:flex;gap:16px;flex-wrap:wrap}
+.soad-stat{display:flex;flex-direction:column;gap:2px}
+.soad-stat-label{font-family:'Roboto Mono',monospace;font-size:9px;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase}
+.soad-stat-value{font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;color:#ff6666}
+
+/* DIRECTIONS BOX */
+.directions-box{margin:0 20px 16px;background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.dir-header{background:var(--steel);padding:10px 14px;display:flex;align-items:center;gap:8px}
+.dir-header-text{font-family:'Oswald',sans-serif;font-size:12px;color:var(--amber);text-transform:uppercase;letter-spacing:.08em}
+.dir-body{padding:12px 14px}
+.dir-step{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(0,0,0,.06)}
+.dir-step:last-child{border-bottom:none}
+.dir-num{font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;color:var(--amber);width:20px;flex-shrink:0;line-height:1.3}
+.dir-text{font-size:12.5px;color:#444;line-height:1.5}
+.dir-text strong{color:var(--black);font-weight:600}
+.dir-time{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--amber);margin-top:2px}
+
+/* HOTEL CARD */
+.hotel-card{margin:0 20px 16px;background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border-left:4px solid var(--amber)}
+.hotel-body{padding:14px 16px}
+.hotel-name{font-family:'Oswald',sans-serif;font-size:16px;font-weight:700;color:var(--black);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}
+.hotel-addr{font-size:12px;color:#777;margin-bottom:8px}
+.hotel-meta{display:flex;gap:12px;flex-wrap:wrap}
+.hotel-meta-item{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--amber);letter-spacing:.06em;text-transform:uppercase}
+.hotel-link{display:block;background:var(--amber);color:var(--black);font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:8px 14px;text-decoration:none;margin-top:10px;text-align:center}
+
+/* RHEINTURM PRICING */
+.price-row{margin:0 20px 16px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.price-card{background:var(--card-bg);border-radius:var(--radius);padding:12px 14px;box-shadow:var(--shadow);border-top:3px solid var(--amber);text-align:center}
+.price-label{font-family:'Roboto Mono',monospace;font-size:9px;color:#999;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
+.price-time{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;color:var(--black);text-transform:uppercase;margin-bottom:4px}
+.price-amount{font-family:'Oswald',sans-serif;font-size:24px;font-weight:700;color:var(--amber)}
+.price-note{font-size:10px;color:#999;margin-top:2px}
+
+/* FOOD GRID */
+.food-grid{margin:0 20px 16px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.food-card{background:var(--card-bg);border-radius:var(--radius);padding:12px 14px;box-shadow:var(--shadow);border-top:3px solid var(--amber)}
+.food-icon{font-size:20px;margin-bottom:6px;display:block}
+.food-name{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;color:var(--black);text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px}
+.food-desc{font-size:11px;color:#888;line-height:1.4}
+.food-card.full{grid-column:1/-1}
+
+/* MAP */
+.map-block{margin:0 20px 16px}
+.block-title{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;color:var(--smoke);text-transform:uppercase;letter-spacing:.16em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.block-title::after{content:'';flex:1;height:1px;background:rgba(0,0,0,.1)}
+.map-wrap{border-radius:var(--radius);overflow:hidden;height:210px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,.1)}
+.map-wrap iframe{width:100%;height:100%;border:0}
+
+/* TIP */
+.tip-box{margin:0 20px 16px;background:var(--black);padding:14px 16px;position:relative}
+.tip-box::before{content:'!';position:absolute;left:16px;top:12px;font-family:'Oswald',sans-serif;font-size:24px;font-weight:700;color:var(--amber);line-height:1}
+.tip-content{padding-left:26px}
+.tip-title{font-family:'Roboto Mono',monospace;font-size:9px;color:var(--amber);letter-spacing:.16em;text-transform:uppercase;margin-bottom:5px}
+.tip-text{font-size:12.5px;color:rgba(255,255,255,.65);line-height:1.55}
+
+/* DIVIDER */
+.divider{margin:8px 20px 16px;height:1px;background:rgba(0,0,0,.08)}
+
+/* INFO CARD */
+.info-card{background:var(--card-bg);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);border-left:3px solid var(--amber)}
+.ic-label{font-family:'Roboto Mono',monospace;font-size:9px;color:#999;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
+.ic-value{font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;color:var(--black);text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px}
+.ic-sub{font-size:12px;color:#777;line-height:1.45}
+
+/* FLIGHT CARD */
+.flight-card{margin:0 20px 16px;background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.flight-header{background:var(--steel);padding:10px 14px}
+.flight-header-text{font-family:'Oswald',sans-serif;font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.1em}
+.flight-route{padding:14px 16px;display:flex;align-items:center}
+.flight-city{flex:1}
+.fc-iata{font-family:'Oswald',sans-serif;font-size:26px;font-weight:700;color:var(--black);line-height:1}
+.fc-name{font-size:11px;color:#888;margin-top:2px}
+.fc-time{font-family:'Roboto Mono',monospace;font-size:13px;color:var(--amber);margin-top:4px}
+.flight-mid{display:flex;flex-direction:column;align-items:center;flex:1;gap:4px}
+.fl-line{width:100%;display:flex;align-items:center}
+.fl-dash{flex:1;height:1px;background:linear-gradient(90deg,var(--amber),var(--gold))}
+.fl-plane{font-size:16px;color:var(--amber)}
+.fl-dur{font-family:'Roboto Mono',monospace;font-size:10px;color:#999}
+.flight-dest{text-align:right}
+.flight-footer{background:rgba(0,0,0,.04);padding:10px 16px;display:flex;gap:16px}
+.ff-item{font-size:11px;color:#888}
+.ff-item strong{color:var(--black);font-weight:600}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--black);border-top:1px solid var(--amber);padding:10px 0 calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:space-around}
+.bnav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,.3);font-family:'Roboto Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:0 10px;transition:color .2s}
+.bnav-btn.active{color:var(--amber)}
+.bnav-btn svg{width:20px;height:20px}
+
+/* OVERLAYS */
+.overlay{display:none;position:fixed;inset:0;z-index:200;background:var(--paper);overflow-y:auto;padding-bottom:80px}
+.overlay-header{background:var(--black);padding:56px 24px 28px;border-bottom:2px solid var(--amber);position:relative}
+.overlay-back{position:absolute;top:16px;left:16px;background:var(--iron);border:1px solid var(--plate);color:var(--amber);font-family:'Oswald',sans-serif;font-size:13px;padding:6px 10px;cursor:pointer;letter-spacing:.06em}
+.overlay-tag{font-family:'Roboto Mono',monospace;font-size:9px;color:var(--amber);letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px}
+.overlay-title{font-family:'Oswald',sans-serif;font-size:28px;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:.03em}
+.track-btn{display:block;margin-top:8px;background:var(--amber);color:var(--black);font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;text-decoration:none;text-align:center}
+.track-btn:hover{background:var(--gold)}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <svg class="hero-skyline" viewBox="0 0 400 270" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+    <rect x="0" y="192" width="400" height="78" fill="rgba(20,14,6,.6)"/>
+    <line x1="20" y1="205" x2="80" y2="205" stroke="rgba(200,120,10,.06)" stroke-width="1.5"/>
+    <line x1="100" y1="215" x2="190" y2="215" stroke="rgba(200,120,10,.05)" stroke-width="1"/>
+    <line x1="220" y1="208" x2="330" y2="208" stroke="rgba(200,120,10,.06)" stroke-width="1.5"/>
+    <rect x="0" y="158" width="28" height="34" fill="#151005"/>
+    <rect x="360" y="155" width="32" height="37" fill="#151005"/>
+    <!-- Dom -->
+    <rect x="55" y="130" width="50" height="62" fill="#1a1208"/>
+    <rect x="50" y="148" width="6" height="30" fill="#141008"/>
+    <rect x="104" y="148" width="6" height="30" fill="#141008"/>
+    <rect x="61" y="138" width="7" height="14" fill="rgba(200,120,10,.15)" rx="3"/>
+    <rect x="72" y="138" width="7" height="14" fill="rgba(200,120,10,.1)" rx="3"/>
+    <rect x="83" y="138" width="7" height="14" fill="rgba(200,120,10,.18)" rx="3"/>
+    <rect x="56" y="55" width="22" height="78" fill="#1a1208"/>
+    <polygon points="67,15 56,55 78,55" fill="#141008"/>
+    <rect x="66" y="3" width="2" height="10" fill="rgba(200,120,10,.6)"/>
+    <rect x="82" y="55" width="22" height="78" fill="#181106"/>
+    <polygon points="93,15 82,55 104,55" fill="#141008"/>
+    <rect x="92" y="3" width="2" height="10" fill="rgba(200,120,10,.5)"/>
+    <rect x="59" y="70" width="5" height="8" fill="rgba(200,120,10,.3)" rx="1"/>
+    <rect x="71" y="70" width="5" height="8" fill="rgba(200,120,10,.2)" rx="1"/>
+    <rect x="85" y="70" width="5" height="8" fill="rgba(200,120,10,.25)" rx="1"/>
+    <rect x="97" y="70" width="5" height="8" fill="rgba(200,120,10,.2)" rx="1"/>
+    <!-- Bridge -->
+    <rect x="110" y="182" width="70" height="10" fill="#181208"/>
+    <path d="M110,182 Q130,165 150,182" stroke="#201808" stroke-width="3" fill="none"/>
+    <path d="M130,182 Q150,165 170,182" stroke="#201808" stroke-width="3" fill="none"/>
+    <rect x="125" y="162" width="4" height="22" fill="#1a1408"/>
+    <rect x="151" y="162" width="4" height="22" fill="#1a1408"/>
+    <rect x="116" y="183" width="2" height="2" fill="rgba(200,120,10,.3)"/>
+    <rect x="122" y="183" width="2" height="2" fill="rgba(200,120,10,.2)"/>
+    <rect x="164" y="183" width="2" height="2" fill="rgba(200,120,10,.3)"/>
+    <!-- Rheinturm -->
+    <rect x="258" y="162" width="16" height="30" fill="#1a1208"/>
+    <rect x="263" y="68" width="6" height="96" fill="#181208"/>
+    <rect x="255" y="102" width="22" height="12" fill="#1e1508"/>
+    <rect x="265" y="40" width="2" height="30" fill="#1a1208"/>
+    <circle cx="266" cy="27" r="2" fill="rgba(200,120,10,.7)"/>
+    <rect x="258" y="104" width="4" height="4" fill="rgba(200,120,10,.4)" rx=".5"/>
+    <rect x="264" y="104" width="4" height="4" fill="rgba(200,120,10,.3)" rx=".5"/>
+    <rect x="270" y="104" width="4" height="4" fill="rgba(200,120,10,.4)" rx=".5"/>
+    <!-- MedienHafen Gehry -->
+    <rect x="290" y="145" width="20" height="47" fill="#181208" rx="1"/>
+    <rect x="312" y="138" width="22" height="54" fill="#1a1308" rx="1"/>
+    <rect x="336" y="150" width="18" height="42" fill="#181208" rx="1"/>
+    <rect x="293" y="158" width="5" height="6" fill="rgba(200,120,10,.2)" rx=".5"/>
+    <rect x="315" y="145" width="6" height="8" fill="rgba(200,120,10,.25)" rx=".5"/>
+    <rect x="339" y="157" width="5" height="7" fill="rgba(200,120,10,.22)" rx=".5"/>
+    <circle cx="30" cy="30" r="1" fill="rgba(200,120,10,.4)"/>
+    <circle cx="150" cy="20" r=".8" fill="rgba(255,255,255,.3)"/>
+    <circle cx="310" cy="18" r=".8" fill="rgba(200,120,10,.35)"/>
+  </svg>
+  <div class="hero-water"></div>
+  <div class="hero-content">
+    <div class="hero-city-label">Rheinland · Deutschland · 08–12 Juli 2026</div>
+    <div class="hero-title">KÖLN &amp;<br><span class="accent">DÜSSEL</span><br>DORF</div>
+    <div class="hero-meta">
+      <div class="hero-date-block">08–12 Juli</div>
+      <div class="hero-sep"></div>
+      <div class="hero-cities">5 TAGE · 2 STÄDTE · ∞ BIER</div>
+    </div>
+    <div class="scroll-cta">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      Itinerario
+    </div>
+  </div>
+</section>
+
+<main class="main">
+  <div class="top-band">
+    <span class="top-band-flag">🇩🇪</span>
+    <span class="top-band-text"><strong>Andrés · Kilian · Adri</strong> · Julio 2026 · Región del Rin</span>
+  </div>
+
+  <nav class="nav-tabs" id="navTabs">
+    <button class="nav-tab active" data-day="0"><span class="day-num">08</span><span class="day-label">Köln</span></button>
+    <button class="nav-tab" data-day="1"><span class="day-num">09</span><span class="day-label">→Düss.</span></button>
+    <button class="nav-tab" data-day="2"><span class="day-num">10</span><span class="day-label">SOAD🤘</span></button>
+    <button class="nav-tab" data-day="3"><span class="day-num">11</span><span class="day-label">See</span></button>
+    <button class="nav-tab" data-day="4"><span class="day-num">12</span><span class="day-label">Vuelos</span></button>
+  </nav>
+
+  <!-- ═══ DÍA 1 — MIÉ 8 — COLONIA ═══ -->
+  <section class="day-section active" id="day-0">
+    <div class="section-header" data-city="KÖLN">
+      <div class="city-badge">🇩🇪 Colonia</div>
+      <div class="section-tag">Miércoles 8 julio 2026</div>
+      <div class="section-title">Ankunft<br>Köln</div>
+      <div class="section-meta">Llegadas · B&B Messe · Free Tour · Catedral · Rin</div>
+    </div>
+
+    <!-- Llegadas -->
+    <div class="who-row">
+      <div class="who-pill">
+        <div class="who-name">Andrés</div>
+        <div class="who-time">10:55</div>
+        <div class="who-note">FR2816 · STN → CGN</div>
+        <a href="https://www.flightradar24.com/data/flights/fr2816" target="_blank" class="track-btn">✈ Seguir FR2816 en Flightradar24</a>
+      </div>
+      <div class="who-pill">
+        <div class="who-name">Kilian &amp; Adri</div>
+        <div class="who-time">08:50</div>
+        <div class="who-note">FR7810 · BCN → CGN</div>
+        <a href="https://www.flightradar24.com/data/flights/fr7810" target="_blank" class="track-btn">✈ Seguir FR7810 en Flightradar24</a>
+      </div>
+    </div>
+
+    <!-- Hotel -->
+    <div style="height:16px"></div>
+    <div class="hotel-card">
+      <div class="hotel-body">
+        <div class="hotel-name">B&amp;B Hotel Köln-Messe</div>
+        <div class="hotel-addr">Gummersbacher Str. 6, 50679 Köln</div>
+        <div class="hotel-meta">
+          <span class="hotel-meta-item">Check-in: 15:00</span>
+          <span class="hotel-meta-item">⭐ 4.1</span>
+        </div>
+        <a class="hotel-link" href="https://www.booking.com/hotel/de/b-and-b-koeln-messe.es.html" target="_blank">Ver en Booking.com →</a>
+      </div>
+    </div>
+
+    <!-- Indicaciones al free tour -->
+    <div class="directions-box">
+      <div class="dir-header">
+        <span style="font-size:16px">🗺</span>
+        <span class="dir-header-text">Cómo llegar: B&amp;B Messe → Eigelstein-Torburg (Free Tour)</span>
+      </div>
+      <div class="dir-body">
+        <div class="dir-step">
+          <div class="dir-num">1</div>
+          <div>
+            <div class="dir-text">Desde el hotel, camina ~5 min hasta la parada <strong>Köln Messe/Deutz</strong></div>
+            <div class="dir-time">~5 min a pie</div>
+          </div>
+        </div>
+        <div class="dir-step">
+          <div class="dir-num">2</div>
+          <div>
+            <div class="dir-text">Toma la <strong>S-Bahn S6, S11 o S12</strong> dirección Köln Hbf (1 parada) o cruza el puente a pie por el Hohenzollernbrücke (~15 min)</div>
+            <div class="dir-time">~5 min en tren</div>
+          </div>
+        </div>
+        <div class="dir-step">
+          <div class="dir-num">3</div>
+          <div>
+            <div class="dir-text">Desde Köln Hbf camina ~12 min hacia el norte por la <strong>Eigelsteiner Str.</strong> hasta la Eigelsteintorburg (torre medieval)</div>
+            <div class="dir-time">~12 min a pie</div>
+          </div>
+        </div>
+        <div class="dir-step">
+          <div class="dir-num">4</div>
+          <div>
+            <div class="dir-text">Punto de encuentro: <strong>Eigelstein 135</strong> — la torre medieval romana. El guía espera en la base de la torre con cartel.</div>
+            <div class="dir-time">⏰ Llegar a las 16:05</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hl-card" data-icon="🚶" style="margin-top:0">
+      <div class="hl-tag">— Tour incluido</div>
+      <div class="hl-title">Free Tour Colonia</div>
+      <div class="hl-sub">Sale desde Eigelstein-Torburg · En inglés · 2h 30min de duración</div>
+      <div class="hl-stats">
+        <div class="hl-stat"><span class="hl-stat-label">Salida</span><span class="hl-stat-value">16:10</span></div>
+        <div class="hl-stat"><span class="hl-stat-label">Duración</span><span class="hl-stat-value">2h 30m</span></div>
+        <div class="hl-stat"><span class="hl-stat-label">Precio</span><span class="hl-stat-value">Propina</span></div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">08:50</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card">
+          <div class="t-card-title">Kilian &amp; Adri aterrizan en CGN</div>
+          <div class="t-card-desc">Llegan antes. S19 desde el aeropuerto al centro (~15 min). Tiempo libre para explorar o descansar cerca del hotel hasta el check-in.</div>
+          <div class="t-badges"><span class="t-badge badge-zug">S19 → Centro</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">10:55</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card">
+          <div class="t-card-title">Andrés aterriza en CGN</div>
+          <div class="t-card-desc">Llegada desde Londres Stansted. S19 desde el aeropuerto al centro de Colonia (~15 min). El B&B Messe está cerca de la estación Köln Messe/Deutz.</div>
+          <div class="t-badges"><span class="t-badge badge-zug">S19 → Köln Messe</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">13:00</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card">
+          <div class="t-card-title">Quedada y almuerzo</div>
+          <div class="t-card-desc">Los tres juntos por primera vez. Almuerzo en el centro histórico cerca del Dom antes del check-in. La zona del Altmarkt tiene varias opciones de comida rápida alemana.</div>
+          <div class="t-badges"><span class="t-badge badge-essen">Almuerzo juntos</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">15:00</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card featured">
+          <div class="t-card-title">🏨 Check-in B&amp;B Köln-Messe</div>
+          <div class="t-card-desc">Check-in a las 15:00. Deja las maletas y sal hacia el free tour. El hotel está junto a la estación Messe/Deutz — bien conectado con el centro en tren o cruzando el puente a pie.</div>
+          <div class="t-badges"><span class="t-badge badge-geo">Gummersbacher Str. 6</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">15:45</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card">
+          <div class="t-card-title">Camino a Eigelstein-Torburg</div>
+          <div class="t-card-desc">Salir del hotel a las 15:45 para llegar con margen. S-Bahn hasta Köln Hbf + 12 min a pie, o cruzar el Hohenzollernbrücke a pie (~20 min total). Ver indicaciones arriba.</div>
+          <div class="t-badges"><span class="t-badge badge-zug">S-Bahn o a pie</span><span class="t-badge badge-warn">Salir 15:45</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">16:10</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card featured">
+          <div class="t-card-title">🚶 Free Tour — Eigelstein-Torburg</div>
+          <div class="t-card-desc">Tour en inglés desde la torre medieval. 2h 30min cubriendo el Dom, el centro romano, el Barrio Belga y el río Rin. Propina al guía al final (€5–10 recomendado).</div>
+          <div class="t-badges"><span class="t-badge badge-frei">Gratis + propina</span><span class="t-badge badge-hist">Inglés · 2h 30min</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">18:40</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card featured">
+          <div class="t-card-title">⛪ Kölner Dom — Imprescindible</div>
+          <div class="t-card-desc">La catedral gótica más visitada de Alemania, Patrimonio UNESCO. Interior gratuito. Si sobra tiempo, sube a la torre (533 peldaños, €6). De noche la iluminación es espectacular.</div>
+          <div class="t-badges"><span class="t-badge badge-hist">UNESCO · ⭐ 4.8</span><span class="t-badge badge-frei">Interior gratis</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">19:15</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card featured">
+          <div class="t-card-title">🔭 Aussichtspunkt Hohenzollernbrücke</div>
+          <div class="t-card-desc">El mirador junto al puente de los candados — vistas directas al Dom desde la orilla del Rin. Uno de los mejores puntos de foto de Colonia. <strong>Cierra a las 20:00 — no llegar tarde.</strong></div>
+          <div class="t-badges"><span class="t-badge badge-warn">⚠️ Cierra 20:00</span><span class="t-badge badge-geo">⭐ 4.9</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">20:00</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card">
+          <div class="t-card-title">🔒 Puente de los Candados &amp; paseo por el Rin</div>
+          <div class="t-card-desc">El Hohenzollernbrücke tiene más de 500.000 candados. Paseo sobre el río con vistas nocturnas al Dom iluminado.</div>
+          <div class="t-badges"><span class="t-badge badge-frei">Siempre abierto · Gratis</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">21:30</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card featured">
+          <div class="t-card-title">🍺 Schnitzel y Kölsch — Primera noche</div>
+          <div class="t-card-desc">Cena en un Brauhaus del Altstadt. El Schnitzel con Bratkartoffeln y varias Kölsch (se rellenan solas hasta que pones el posavasos encima). Früh am Dom o Gaffel am Dom son clásicos.</div>
+          <div class="t-badges"><span class="t-badge badge-bier">Kölsch</span><span class="t-badge badge-essen">Schnitzel</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-block">
+      <div class="block-title">Eigelstein-Torburg · Punto de encuentro Free Tour</div>
+      <div class="map-wrap"><iframe src="https://www.google.com/maps?q=Eigelsteintorburg+Eigelstein+135+Köln&z=15&output=embed" loading="lazy"></iframe></div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-content">
+        <div class="tip-title">Mirador Triángulo — El secreto de Colonia</div>
+        <div class="tip-text">Si hay tiempo, el KölnTriangle (edificio triangular en la orilla de Deutz, junto al hotel) tiene las mejores vistas de la catedral — mejor que desde la propia torre del Dom. Entrada ~€3. Muy cerca del B&B Messe.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ DÍA 2 — JUE 9 — COLONIA → DÜSSELDORF ═══ -->
+  <section class="day-section" id="day-1">
+    <div class="section-header" data-city="DÜSS">
+      <div class="city-badge">🇩🇪 Köln → Düsseldorf</div>
+      <div class="section-tag">Jueves 9 julio 2026</div>
+      <div class="section-title">Interior<br>→ Altstadt</div>
+      <div class="section-meta">Centro Colonia · Gestapo · Check-out 12:00 · Tren · Düsseldorf</div>
+    </div>
+
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">09:30</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card featured">
+          <div class="t-card-title">🏛 Interior de Colonia — Mañana libre</div>
+          <div class="t-card-desc">Visitar lo que quedó pendiente el día anterior: el Barrio Belga (Belgisches Viertel, con cafés y ambiente local), el Römerturm (resto de muralla romana), el mercado de la Altmarkt y las iglesias románicas del centro.</div>
+          <div class="t-badges"><span class="t-badge badge-hist">Centro histórico</span><span class="t-badge badge-frei">Barrio Belga</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">10:00</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card">
+          <div class="t-card-title">🏛 NS-Dokumentationszentrum (Gestapo) — Opcional</div>
+          <div class="t-card-desc">Appellhofplatz 23-25. El cuartel de la Gestapo convertido en museo. El sótano conserva las celdas con inscripciones de prisioneros. Muy impactante. <strong>Cerrado los lunes</strong> — jueves abre 10:00–18:00. Entrada ~€4,50 + audioguía €2 (imprescindible en inglés).</div>
+          <div class="t-badges"><span class="t-badge badge-hist">Opcional · ⭐ 4.5</span><span class="t-badge badge-hist">WWII</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">11:30</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card dark-card">
+          <div class="t-card-title">Check-out B&amp;B Messe — Antes de las 12:00</div>
+          <div class="t-card-desc">Recoge el equipaje y haz check-out antes de las 12:00. La estación Messe/Deutz está a 5 min del hotel.</div>
+          <div class="t-badges"><span class="t-badge badge-warn">⚠️ Checkout 12:00</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">12:30</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card dark-card featured">
+          <div class="t-card-title">🚆 Tren Köln → Düsseldorf</div>
+          <div class="t-card-desc">IC/ICE desde Köln Hauptbahnhof hasta Düsseldorf Hauptbahnhof. 25–40 minutos. Salidas muy frecuentes. Billete desde ~€15 con DB Navigator. Compra online con antelación.</div>
+          <div class="t-badges"><span class="t-badge badge-zug">~30 min · Köln Hbf → Düss. Hbf</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">14:00</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card featured">
+          <div class="t-card-title">🏠 Check-in Liro Apartments</div>
+          <div class="t-card-desc">Eupener Straße 20, Heerdt, Düsseldorf. Check-in a partir de las 14:00. El barrio de Heerdt está al oeste del centro, a ~15 min del Altstadt en metro (U70/U76 hasta Altstadt).</div>
+          <div class="t-badges"><span class="t-badge badge-geo">Eupener Str. 20 · Heerdt</span><span class="t-badge badge-zug">U70/U76 → Altstadt</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">15:30</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card featured">
+          <div class="t-card-title">🏘 Altstadt — La calle de bares más densa</div>
+          <div class="t-card-desc">El Altstadt de Düsseldorf tiene más de 260 bares en pocas calles. Paseo por la Bolkerstraße, Burgplatz y la orilla del Rin. Primera Altbier — la cerveza local rival de la Kölsch. Más oscura, amarga y con más cuerpo.</div>
+          <div class="t-badges"><span class="t-badge badge-bier">Altbier 🍺</span><span class="t-badge badge-hist">⭐ 4.5</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">20:00</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card">
+          <div class="t-card-title">Cena en el Altstadt</div>
+          <div class="t-card-desc">Sauerbraten (asado marinado renano), Currywurst o un codillo en algún Brauhaus. El Uerige y el Füchschen son los bares de cerveza más tradicionales de Düsseldorf.</div>
+          <div class="t-badges"><span class="t-badge badge-essen">Sauerbraten</span><span class="t-badge badge-bier">Uerige · Füchschen</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-block">
+      <div class="block-title">Liro Apartments · Eupener Str. 20, Heerdt</div>
+      <div class="map-wrap"><iframe src="https://www.google.com/maps?q=Eupener+Straße+20+40549+Düsseldorf+Heerdt&z=15&output=embed" loading="lazy"></iframe></div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-content">
+        <div class="tip-title">La guerra de las cervezas</div>
+        <div class="tip-text">En Colonia se bebe Kölsch y en Düsseldorf Altbier. Si pides la cerveza equivocada en cada ciudad, los locales lo toman MUY en serio. Llegan rivalidades entre las dos ciudades que duran siglos 😄.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ DÍA 3 — VIE 10 — FREE TOUR + SOAD ═══ -->
+  <section class="day-section" id="day-2">
+    <div class="section-header" data-city="SOAD">
+      <div class="city-badge">🇩🇪 Düsseldorf</div>
+      <div class="section-tag">Viernes 10 julio 2026</div>
+      <div class="section-title">Free Tour<br>&amp; SOAD 🤘</div>
+      <div class="section-meta">Civitatis 10:30 · Königsallee · MedienHafen · System of a Down 18:30</div>
+    </div>
+
+    <div style="height:16px"></div>
+    <div class="soad-card">
+      <div class="soad-tag">— Concierto de la noche 🤘</div>
+      <div class="soad-title">System of a Down</div>
+      <div class="soad-sub">Messeparkplatz P1, Düsseldorf · Apertura de puertas 18:30<br>Llevar entrada descargada en el móvil</div>
+      <div class="soad-stats">
+        <div class="soad-stat"><span class="soad-stat-label">Puertas</span><span class="soad-stat-value">18:30</span></div>
+        <div class="soad-stat"><span class="soad-stat-label">Venue</span><span class="soad-stat-value">Messeparkplatz P1</span></div>
+        <div class="soad-stat"><span class="soad-stat-label">Metro</span><span class="soad-stat-value">U78/U79</span></div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">09:30</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card">
+          <div class="t-card-title">Desayuno y camino a Königsallee</div>
+          <div class="t-card-desc">Desayuno cerca del Airbnb o de camino al centro. Metro U70/U76 desde Heerdt hasta el Altstadt, luego caminar hasta Königsallee 52 (punto de encuentro del tour).</div>
+          <div class="t-badges"><span class="t-badge badge-zug">U70/U76 → Centro</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">10:30</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card featured">
+          <div class="t-card-title">🚶 Free Tour Düsseldorf — Civitatis</div>
+          <div class="t-card-desc">Sale desde <strong>Königsallee 52</strong>. Tour organizado por Civitatis. Cubre el Altstadt, Hofgarten, la K.O. (Königsallee), el barrio japonés y la historia de la ciudad. Propina al guía al final.</div>
+          <div class="t-badges"><span class="t-badge badge-frei">Gratis · Civitatis</span><span class="t-badge badge-geo">Königsallee 52</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">13:00</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card">
+          <div class="t-card-title">Almuerzo — Currywurst</div>
+          <div class="t-card-desc">Almuerzo rápido después del tour. La Currywurst es el fast food alemán por excelencia: salchicha troceada con salsa de tomate y curry. Hay puestos por todo el centro.</div>
+          <div class="t-badges"><span class="t-badge badge-essen">Currywurst</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">14:30</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card featured">
+          <div class="t-card-title">🏗 MedienHafen — Arquitectura Gehry</div>
+          <div class="t-card-desc">El antiguo puerto industrial reconvertido en barrio creativo. Los tres edificios del arquitecto Frank Gehry son icónicos por sus fachadas onduladas de acero. Paseo gratuito y muy fotogénico.</div>
+          <div class="t-badges"><span class="t-badge badge-frei">Gratis</span><span class="t-badge badge-geo">Gehry · Puerto</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">16:30</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card dark-card">
+          <div class="t-card-title">Cena rápida antes del concierto</div>
+          <div class="t-card-desc">Come algo antes de ir al venue. El Messeparkplatz P1 está al norte de la ciudad (U78/U79). Calcula ~25 min desde el Altstadt en metro.</div>
+          <div class="t-badges"><span class="t-badge badge-essen">Cena rápida</span><span class="t-badge badge-warn">Salir a las 17:30</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">18:30</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card featured" style="border-left-color:#c00">
+          <div class="t-card-title">🤘 System of a Down — Puertas abren</div>
+          <div class="t-card-desc">Messeparkplatz P1, Düsseldorf. Apertura de puertas a las 18:30. Llega puntual para conseguir buena posición. Lleva la entrada en el móvil descargada (sin depender de datos).</div>
+          <div class="t-badges"><span class="t-badge badge-soad">SOAD · Live</span><span class="t-badge badge-warn">Entrada en móvil</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-block">
+      <div class="block-title">Messeparkplatz P1 · Venue SOAD</div>
+      <div class="map-wrap"><iframe src="https://www.google.com/maps?q=Messe+Düsseldorf+Parkplatz+P1+Am+Staad+40474+Düsseldorf&z=14&output=embed" loading="lazy"></iframe></div>
+    </div>
+
+    <div class="directions-box">
+      <div class="dir-header">
+        <span style="font-size:16px">🚇</span>
+        <span class="dir-header-text">Cómo llegar al concierto desde el Altstadt</span>
+      </div>
+      <div class="dir-body">
+        <div class="dir-step">
+          <div class="dir-num">1</div>
+          <div>
+            <div class="dir-text">Desde Altstadt toma el metro <strong>U78 o U79</strong> dirección Messe/Düsseldorf Nord</div>
+            <div class="dir-time">~20 min</div>
+          </div>
+        </div>
+        <div class="dir-step">
+          <div class="dir-num">2</div>
+          <div>
+            <div class="dir-text">Parada <strong>Messe Ost/Stockumer Kirchstr.</strong> — el Messeparkplatz P1 está a 5 min a pie siguiendo la señalización del evento</div>
+            <div class="dir-time">~5 min a pie</div>
+          </div>
+        </div>
+        <div class="dir-step">
+          <div class="dir-num">3</div>
+          <div>
+            <div class="dir-text">Llevar la entrada descargada en el móvil. <strong>Salir del Airbnb a las 17:30</strong> como muy tarde</div>
+            <div class="dir-time">⏰ Puertas 18:30</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-content">
+        <div class="tip-title">Antes del concierto</div>
+        <div class="tip-text">Carga el móvil al 100% antes de salir. Descarga la entrada offline. Lleva algo de efectivo por si hay bares o merchandise. Los conciertos en el Messeparkplatz suelen tener transporte público reforzado de vuelta.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ DÍA 4 — SÁB 11 — SEE + TOKYO + RHEINTURM ═══ -->
+  <section class="day-section" id="day-3">
+    <div class="section-header" data-city="SEE">
+      <div class="city-badge">🇩🇪 Düsseldorf</div>
+      <div class="section-tag">Sábado 11 julio 2026</div>
+      <div class="section-title">Lago · Tokyo<br>&amp; Rheinturm</div>
+      <div class="section-meta">Strandbad Süd · Little Tokyo · Rheinturm</div>
+    </div>
+
+    <!-- Rheinturm pricing -->
+    <div style="height:16px"></div>
+    <div style="padding:0 20px 8px"><div class="block-title">Rheinturm — Tarifas especiales</div></div>
+    <div class="price-row">
+      <div class="price-card">
+        <div class="price-label">Early Bird</div>
+        <div class="price-time">Hasta las 12:00</div>
+        <div class="price-amount">€8</div>
+        <div class="price-note">Precio reducido mañana</div>
+      </div>
+      <div class="price-card">
+        <div class="price-label">Late Night</div>
+        <div class="price-time">Desde las 20:00</div>
+        <div class="price-amount">€8</div>
+        <div class="price-note">Precio reducido noche</div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">10:00</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card featured">
+          <div class="t-card-title">🏖 Am Unterbacher See — Strandbad Süd</div>
+          <div class="t-card-desc">El lago de baño más popular de Düsseldorf, con playa de arena. Entrada ~€4,50/día + €2 parking. Alquiler de tablas de paddle, kayaks y barcos. Dos restaurantes con terraza. <strong>Llegar antes de las 11 para pillar buena zona.</strong></div>
+          <div class="t-badges"><span class="t-badge badge-water">🏊 Lago · ⭐ 4.3</span><span class="t-badge badge-frei">~€4,50</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">14:30</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card">
+          <div class="t-card-title">Regreso al centro</div>
+          <div class="t-card-desc">El lago está al sureste de la ciudad. En coche ~20 min, en metro S-Bahn S28 hasta Erkrath o Gruppenbus. Cambia y refréscate en el Airbnb antes de salir al barrio japonés.</div>
+          <div class="t-badges"><span class="t-badge badge-zug">S28 o coche</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">16:30</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card featured">
+          <div class="t-card-title">🇯🇵 Little Tokyo — Immermannstraße</div>
+          <div class="t-card-desc">Düsseldorf tiene la tercera comunidad japonesa más grande de Europa. La Immermannstraße concentra supermercados japoneses, librerías de manga, restaurantes de ramen auténtico, tiendas de anime y pastelerías japonesas. Imprescindible el ramen en My Noodlehouse.</div>
+          <div class="t-badges"><span class="t-badge badge-japan">🇯🇵 Little Tokyo · ⭐ 4.4</span><span class="t-badge badge-essen">Ramen · Dorayaki</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">18:00</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card">
+          <div class="t-card-title">Paseo Altstadt &amp; Rin — Tarde libre</div>
+          <div class="t-card-desc">Tarde libre por el Altstadt y la orilla del Rin. Terraza con Altbier mientras decide el grupo si subir al Rheinturm de noche (20:00, €8) o si ya se subió de mañana.</div>
+          <div class="t-badges"><span class="t-badge badge-frei">Tarde libre</span><span class="t-badge badge-bier">Altbier</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">20:00</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card featured">
+          <div class="t-card-title">🗼 Rheinturm — Late Night €8</div>
+          <div class="t-card-desc">Subida a la torre a partir de las 20:00 con precio reducido (€8). Vistas nocturnas de 360° sobre el Rin, Düsseldorf y en días claros hasta Colonia. Hay bar en lo alto. Cierra a medianoche.</div>
+          <div class="t-badges"><span class="t-badge badge-geo">168 m · ⭐ 4.5</span><span class="t-badge badge-warn">€8 desde 20:00</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-block">
+      <div class="block-title">Am Unterbacher See · Strandbad Süd</div>
+      <div class="map-wrap"><iframe src="https://www.google.com/maps?q=Am+Unterbacher+See+Strandbad+Süd+Am+Kleinforst+300+Düsseldorf&z=14&output=embed" loading="lazy"></iframe></div>
+    </div>
+    <div style="height:8px"></div>
+    <div class="map-block">
+      <div class="block-title">Little Tokyo · Immermannstraße</div>
+      <div class="map-wrap"><iframe src="https://www.google.com/maps?q=Little+Tokyo+Düsseldorf+Immermannstraße&z=15&output=embed" loading="lazy"></iframe></div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-content">
+        <div class="tip-title">Lago — llegar temprano</div>
+        <div class="tip-text">El Strandbad Süd se llena mucho en verano los sábados. Llegar antes de las 11:00 para pillar sitio bueno en la playa de arena. Llevar toalla, crema solar y algo de cash (algunos puestos no aceptan tarjeta).</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ DÍA 5 — DOM 12 — KAISERSWERTH + VUELOS ═══ -->
+  <section class="day-section" id="day-4">
+    <div class="section-header" data-city="FLUG">
+      <div class="city-badge">🇩🇪 Düsseldorf · Vuelos</div>
+      <div class="section-tag">Domingo 12 julio 2026</div>
+      <div class="section-title">Kaisers&shy;werth<br>&amp; Heimflug</div>
+      <div class="section-meta">Ruinas medievales · Andrés 15:25 DUS→SVQ · Kilian&amp;Adri 20:30 DUS→BCN</div>
+    </div>
+
+    <!-- Vuelos -->
+    <div style="height:16px"></div>
+    <div class="flight-card">
+      <div class="flight-header"><div class="flight-header-text">✈ Andrés — Vuelo de regreso · Ryanair</div></div>
+      <div class="flight-route">
+        <div class="flight-city">
+          <div class="fc-iata">DUS</div>
+          <div class="fc-name">Düsseldorf</div>
+          <div class="fc-time">15:25</div>
+        </div>
+        <div class="flight-mid">
+          <div class="fl-line"><div class="fl-dash"></div><div class="fl-plane">✈</div><div class="fl-dash"></div></div>
+          <div class="fl-dur">→ Sevilla</div>
+        </div>
+        <div class="flight-city flight-dest">
+          <div class="fc-iata">SVQ</div>
+          <div class="fc-name">Sevilla</div>
+          <div class="fc-time">Andrés</div>
+        </div>
+      </div>
+      <div class="flight-footer">
+        <div class="ff-item"><strong>Salida</strong><br>15:25 DUS</div>
+        <div class="ff-item"><strong>Check-in aeropuerto</strong><br>~13:00 como máx.</div>
+      </div>
+      <div style="padding:0 16px 14px">
+        <a href="https://www.flightradar24.com/data/flights/fr2816" target="_blank" class="track-btn">✈ Seguir FR2816 en Flightradar24</a>
+      </div>
+    </div>
+
+    <div class="flight-card">
+      <div class="flight-header"><div class="flight-header-text">✈ Kilian &amp; Adri — Vuelo de regreso · Ryanair</div></div>
+      <div class="flight-route">
+        <div class="flight-city">
+          <div class="fc-iata">DUS</div>
+          <div class="fc-name">Düsseldorf</div>
+          <div class="fc-time">20:30</div>
+        </div>
+        <div class="flight-mid">
+          <div class="fl-line"><div class="fl-dash"></div><div class="fl-plane">✈</div><div class="fl-dash"></div></div>
+          <div class="fl-dur">→ Barcelona</div>
+        </div>
+        <div class="flight-city flight-dest">
+          <div class="fc-iata">BCN</div>
+          <div class="fc-name">Barcelona</div>
+          <div class="fc-time">Kilian &amp; Adri</div>
+        </div>
+      </div>
+      <div class="flight-footer">
+        <div class="ff-item"><strong>Salida</strong><br>20:30 DUS</div>
+        <div class="ff-item"><strong>Tiempo libre</strong><br>Tarde completa en Düsseldorf</div>
+      </div>
+      <div style="padding:0 16px 14px">
+        <a href="https://www.flightradar24.com/data/flights/fr7810" target="_blank" class="track-btn">✈ Seguir FR7810 en Flightradar24</a>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">09:00</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card">
+          <div class="t-card-title">Desayuno y metro a Kaiserswerth</div>
+          <div class="t-card-desc">Desde el centro de Düsseldorf, toma el tranvía <strong>U71</strong> dirección Kaiserswerth — unos 30 min. El pueblo medieval está al norte de la ciudad, junto al Rin. Kaiserswerth es la parada final.</div>
+          <div class="t-badges"><span class="t-badge badge-zug">U71 → Kaiserswerth · 30 min</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">10:00</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card featured">
+          <div class="t-card-title">🏰 Kaiserpfalz Kaiserswerth</div>
+          <div class="t-card-desc">Ruinas del palacio imperial del siglo XII construido por Federico Barbarroja. Parcialmente destruido en el siglo XVII. Muros de piedra roja junto al Rin, silencioso, sin apenas turistas. <strong>Uno de los secretos mejor guardados de la región.</strong> Entrada gratuita.</div>
+          <div class="t-badges"><span class="t-badge badge-hist">S. XII · ⭐ 4.6</span><span class="t-badge badge-frei">Gratis</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">11:30</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card">
+          <div class="t-card-title">Paseo por el pueblo + Stiftskirche</div>
+          <div class="t-card-desc">El pueblo medieval tiene también la Stiftskirche (iglesia románica del s. XII) y pequeños cafés junto al río. Buen sitio para un café y descansar antes de volver.</div>
+          <div class="t-badges"><span class="t-badge badge-hist">Románico</span><span class="t-badge badge-essen">Café</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">12:30</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card dark-card featured">
+          <div class="t-card-title">⚠️ Andrés — Camino al aeropuerto DUS</div>
+          <div class="t-card-desc">Vuelo a las 15:25. Salir hacia el aeropuerto sobre las 12:30 desde Kaiserswerth. U71 hasta el centro (~30 min) + S11 hasta DUS Airport (~12 min). O taxi directo desde Kaiserswerth (~20 min).</div>
+          <div class="t-badges"><span class="t-badge badge-warn">⚠️ Vuelo 15:25</span><span class="t-badge badge-zug">U71 → Centro → S11 → DUS</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-line"></div>
+        <div class="t-time">14:00</div>
+        <div class="t-dot-col"><div class="t-dot"></div></div>
+        <div class="t-card">
+          <div class="t-card-title">Kilian &amp; Adri — Tarde libre en Düsseldorf</div>
+          <div class="t-card-desc">Con el vuelo a las 20:30, tienen tarde completa. Altstadt, Rheinturm (si no se subió), paseo por el Rin o quedada de despedida en una terraza con Altbier.</div>
+          <div class="t-badges"><span class="t-badge badge-frei">Tarde libre</span><span class="t-badge badge-bier">Última Altbier</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">18:00</div>
+        <div class="t-dot-col"><div class="t-dot highlight"></div></div>
+        <div class="t-card dark-card featured">
+          <div class="t-card-title">⚠️ Kilian &amp; Adri — Aeropuerto DUS</div>
+          <div class="t-card-desc">Vuelo a las 20:30. Llegar al aeropuerto ~18:00. S11 desde Düsseldorf Hbf hasta el aeropuerto en ~12 min. Check-in, control de seguridad y ¡Auf Wiedersehen, Düsseldorf!</div>
+          <div class="t-badges"><span class="t-badge badge-warn">⚠️ Vuelo 20:30</span><span class="t-badge badge-zug">S11 → DUS Airport</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-block">
+      <div class="block-title">Kaiserpfalz · Kaiserswerth</div>
+      <div class="map-wrap"><iframe src="https://www.google.com/maps?q=Kaiserpfalz+Kaiserswerth+Düsseldorf&z=14&output=embed" loading="lazy"></iframe></div>
+    </div>
+
+    <!-- Resumen -->
+    <div class="divider"></div>
+    <div style="padding:0 20px 10px"><div class="block-title">Resumen del viaje</div></div>
+    <div class="food-grid" style="margin-top:0">
+      <div class="food-card">
+        <span class="food-icon">📅</span>
+        <div class="food-name">Fechas</div>
+        <div class="food-desc">08–12 julio 2026 · 5 días</div>
+      </div>
+      <div class="food-card">
+        <span class="food-icon">👥</span>
+        <div class="food-name">Viajeros</div>
+        <div class="food-desc">Andrés · Kilian · Adri</div>
+      </div>
+      <div class="food-card">
+        <span class="food-icon">✈️</span>
+        <div class="food-name">Andrés</div>
+        <div class="food-desc">15:25 DUS → SVQ</div>
+      </div>
+      <div class="food-card">
+        <span class="food-icon">✈️</span>
+        <div class="food-name">Kilian &amp; Adri</div>
+        <div class="food-desc">20:30 DUS → BCN</div>
+      </div>
+      <div class="food-card full">
+        <span class="food-icon">🤘</span>
+        <div class="food-name">Highlights</div>
+        <div class="food-desc">Dom Köln · Free Tours · Aussichtspunkt (cierra 20h) · SOAD Messeparkplatz P1 · Strandbad Süd · Little Tokyo · Rheinturm €8 · Kaiserswerth</div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-content">
+        <div class="tip-title">Tschüss, Rheinland! Auf Wiedersehen!</div>
+        <div class="tip-text">Cinco días entre el gótico brutal del Dom, la cerveza más perfecta del mundo (cada uno con la suya), las ruinas de Barbarroja, un concierto de SOAD y un lago. El Rin une y separa todo esto.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- OVERLAYS -->
+<div class="overlay" id="overlay-food">
+  <div class="overlay-header">
+    <button class="overlay-back" onclick="closeOverlay('food')">← ZURÜCK</button>
+    <div class="overlay-tag">— Gastronomía</div>
+    <div class="overlay-title">Essen &amp; Trinken</div>
+  </div>
+  <div class="overlay-body">
+    <div style="font-family:'Oswald',sans-serif;font-size:11px;color:#888;letter-spacing:.16em;text-transform:uppercase;margin-bottom:4px">Colonia</div>
+    <div class="food-grid" style="margin:0 0 12px;padding:0">
+      <div class="food-card"><span class="food-icon">🍺</span><div class="food-name">Kölsch</div><div class="food-desc">Clara, suave, vasos de 0,2L. El Köbes la repone sola hasta que tapas el vaso.</div></div>
+      <div class="food-card"><span class="food-icon">🍽</span><div class="food-name">Himmel un Ääd</div><div class="food-desc">Puré de patata y manzana con morcilla. El plato más típico de Colonia.</div></div>
+      <div class="food-card full"><span class="food-icon">🥩</span><div class="food-name">Schnitzel</div><div class="food-desc">Filete empanado con Bratkartoffeln. Clásico en los Brauhäuser.</div></div>
+    </div>
+    <div style="font-family:'Oswald',sans-serif;font-size:11px;color:#888;letter-spacing:.16em;text-transform:uppercase;margin-bottom:4px">Düsseldorf</div>
+    <div class="food-grid" style="margin:0;padding:0">
+      <div class="food-card"><span class="food-icon">🍺</span><div class="food-name">Altbier</div><div class="food-desc">Oscura, amarga, más cuerpo. La cerveza rival de la Kölsch. Uerige y Füchschen.</div></div>
+      <div class="food-card"><span class="food-icon">🍖</span><div class="food-name">Sauerbraten</div><div class="food-desc">Asado marinado en vinagre y especias. Plato estrella renano.</div></div>
+      <div class="food-card"><span class="food-icon">🌭</span><div class="food-name">Currywurst</div><div class="food-desc">Salchicha con curry. Fast food alemán esencial.</div></div>
+      <div class="food-card"><span class="food-icon">🦵</span><div class="food-name">Schweinshaxe</div><div class="food-desc">Codillo asado. Enorme. Para valientes.</div></div>
+      <div class="food-card full"><span class="food-icon">🍜</span><div class="food-name">Ramen — Little Tokyo</div><div class="food-desc">My Noodlehouse en la Immermannstraße — ramen auténtico japonés. Familiar, más de 20 años.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay-map">
+  <div class="overlay-header">
+    <button class="overlay-back" onclick="closeOverlay('map')">← ZURÜCK</button>
+    <div class="overlay-tag">— Mapas clave</div>
+    <div class="overlay-title">Karte</div>
+  </div>
+  <div style="padding:20px;display:flex;flex-direction:column;gap:14px">
+    <div class="block-title">🏨 B&amp;B Hotel Köln-Messe</div>
+    <div class="map-wrap" style="height:190px"><iframe src="https://www.google.com/maps?q=B+B+Hotel+Köln+Messe+Gummersbacher+Str+6&z=15&output=embed" loading="lazy"></iframe></div>
+    <div class="block-title">⛪ Kölner Dom + Aussichtspunkt</div>
+    <div class="map-wrap" style="height:190px"><iframe src="https://www.google.com/maps?q=Cologne+Cathedral+Germany&z=14&output=embed" loading="lazy"></iframe></div>
+    <div class="block-title">🏠 Liro Apartments · Heerdt DUS</div>
+    <div class="map-wrap" style="height:190px"><iframe src="https://www.google.com/maps?q=Eupener+Straße+20+40549+Düsseldorf&z=15&output=embed" loading="lazy"></iframe></div>
+    <div class="block-title">🤘 SOAD · Messeparkplatz P1</div>
+    <div class="map-wrap" style="height:190px"><iframe src="https://www.google.com/maps?q=Messe+Düsseldorf+Parkplatz+P1+Am+Staad&z=14&output=embed" loading="lazy"></iframe></div>
+    <div class="block-title">🏰 Kaiserpfalz Kaiserswerth</div>
+    <div class="map-wrap" style="height:190px"><iframe src="https://www.google.com/maps?q=Kaiserpfalz+Kaiserswerth+Düsseldorf&z=14&output=embed" loading="lazy"></iframe></div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay-info">
+  <div class="overlay-header">
+    <button class="overlay-back" onclick="closeOverlay('info')">← ZURÜCK</button>
+    <div class="overlay-tag">— Info práctica</div>
+    <div class="overlay-title">Praktisch</div>
+  </div>
+  <div class="overlay-body">
+    <div class="info-card"><div class="ic-label">Vuelos</div><div class="ic-value">Andrés 15:25 DUS→SVQ</div><div class="ic-sub">Kilian &amp; Adri 20:30 DUS→BCN · Aeropuerto Düsseldorf (DUS) · S11 desde Hbf en 12 min</div></div>
+    <div class="info-card"><div class="ic-label">Alojamiento</div><div class="ic-value">2 alojamientos</div><div class="ic-sub">Mié–Jue: B&amp;B Hotel Köln-Messe (checkout 12:00) · Jue–Dom: Liro Apartments, Eupener Str. 20, Heerdt DUS (check-in 14:00)</div></div>
+    <div class="info-card"><div class="ic-label">Transporte</div><div class="ic-value">DB Navigator + VRR</div><div class="ic-sub">DB Navigator para trenes. App VRR para metro/tranvía en Düsseldorf. Köln–Düss. en IC: ~30 min desde ~€15. U71 para Kaiserswerth. S11 para aeropuerto DUS.</div></div>
+    <div class="info-card"><div class="ic-label">Moneda</div><div class="ic-value">Euro €</div><div class="ic-sub">Llevar algo de efectivo — algunos bares del Altstadt (especialmente los Brauhäuser tradicionales) solo aceptan cash.</div></div>
+    <div class="info-card"><div class="ic-label">Rheinturm</div><div class="ic-value">€8 Early Bird o Late Night</div><div class="ic-sub">Early Bird: hasta las 12:00 · Late Night: desde las 20:00. Precio normal el resto del día es más caro.</div></div>
+    <div class="info-card"><div class="ic-label">Aussichtspunkt</div><div class="ic-value">Cierra a las 20:00</div><div class="ic-sub">El mirador del Hohenzollernbrücke cierra a las 20:00. No dejar para el final del día o se pierde la visita.</div></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="bnav-btn active" onclick="showView('itinerary',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    Plan
+  </button>
+  <button class="bnav-btn" onclick="showView('food',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+    Essen
+  </button>
+  <button class="bnav-btn" onclick="showView('map',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+    Karte
+  </button>
+  <button class="bnav-btn" onclick="showView('info',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    Info
+  </button>
+</nav>
+
+<script>
+document.querySelectorAll('.nav-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.day-section').forEach(s=>s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('day-'+tab.dataset.day).classList.add('active');
+    document.querySelector('.main').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+function showView(view,btn){
+  document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(view==='itinerary'){closeAllOverlays();}
+  else{document.getElementById('overlay-'+view).style.display='block';document.body.style.overflow='hidden';}
+}
+function closeOverlay(view){
+  document.getElementById('overlay-'+view).style.display='none';
+  document.body.style.overflow='';
+  document.querySelectorAll('.bnav-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
+}
+function closeAllOverlays(){
+  ['food','map','info'].forEach(v=>{const el=document.getElementById('overlay-'+v);if(el)el.style.display='none';});
+  document.body.style.overflow='';
+}
+</script>
+</body>
+</html>
